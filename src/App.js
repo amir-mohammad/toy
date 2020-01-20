@@ -1,25 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
 
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
+import Admin from "./pages/Admin";
+import Login from "./pages/Login";
+import AuthState from "./context/auth/AuthState";
+import 'semantic-ui-css/semantic.min.css'
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthState>
+      <Router basename={process.env.PUBLIC_URL}>
+        <Switch>
+          <Route path={"/admin"} component={Admin} />
+          <Route path={"/login"} component={Login} />
+
+          <Redirect from="/" to="/admin/home" />
+        </Switch>
+      </Router>
+    </AuthState>
   );
 }
 
